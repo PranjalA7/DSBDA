@@ -1,0 +1,64 @@
+Naive Bayes Classification
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+df=pd.read_csv("/home/unix/Downloads/Iris.csv")
+df.head()
+df.shape
+
+df.info()
+df.isnull().sum()
+df.describe()
+df["Species"].value_counts()
+
+df['Species'].replace(['Iris-setosa', 'Iris-versicolor', 'Iris-virginica'],[0, 1, 2], inplace=True)
+df.head()
+
+X=df.drop("Species", axis=1)
+y=df["Species"]
+
+
+from sklearn.model_selection import train_test_split
+ 
+xTrain, xTest, yTrain, yTest = train_test_split(X, y, test_size =0.2, random_state = 0)
+  
+print("xTrain shape : ", xTrain.shape)
+print("xTest shape  : ", xTest.shape)
+print("yTrain shape : ", yTrain.shape)
+print("yTest shape  : ", yTest.shape)
+
+
+from sklearn.naive_bayes import GaussianNB
+GNB = GaussianNB()
+GNB.fit(xTrain, yTrain)
+  
+y_pred = GNB.predict(xTest)
+
+
+from sklearn.metrics import accuracy_score
+accuracy_score(yTest, y_pred)
+
+from sklearn.metrics import precision_score
+precision_score(yTest, y_pred, average=None)
+
+from sklearn.metrics import recall_score
+recall_score(yTest, y_pred, average=None)
+
+from sklearn.metrics import confusion_matrix
+confusion_matrix=confusion_matrix(yTest, y_pred)
+confusion_matrix
+
+import seaborn as sns
+Color_Conf__Matrix = sns.heatmap(confusion_matrix, cmap='coolwarm', annot=True, fmt='0.2f')
+
+from sklearn.metrics import classification_report
+print("Classification-Naive Bayes Classifier Report: \n", classification_report(yTest, y_pred))
+
+plt.scatter(yTest, y_pred, c = 'red')
+plt.xlabel("Species")
+plt.ylabel("Predicted value")
+plt.title("True value vs predicted value : Naive Bayes Classification")
+plt.show()
+
+df.isnull().sum()

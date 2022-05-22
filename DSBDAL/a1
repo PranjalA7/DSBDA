@@ -1,0 +1,59 @@
+import pandas as pd
+data = pd.read_csv("./Iris.csv")
+data.head()
+data.isnull()
+data.notnull()
+data.describe()
+data.info()
+data.dtypes
+
+bool_serie=pd.isnull(data["species"])
+data[bool_serie]
+bool_series=pd.notnull(data["species"])
+data[bool_series]
+
+data.tail()
+data.shape
+data.isnull().sum()
+print(data)
+data.index
+data.notnull().sum()
+data.notna()
+data.columns
+data.tail(10)
+data.sample()
+
+data.nunique()
+data.nunique
+
+data.sample()
+data.shape
+data.size
+data.min()
+data.max()
+data.mean()
+data.std()
+
+apply type converison
+
+dfn=data.convert_dtypes()
+dfn.dtypes
+
+separate numerci and categorical value
+
+numeric=data.select_dtypes(include='number')
+categoric=data.select_dtypes(exclude='number')
+numeric
+categoric
+
+data['species'].value_counts()
+data['species'].replace(['Iris-versicolor','Iris-setosa','Iris-virginica'],[0,1,2],inplace=True)
+data
+
+data.iloc[5]
+data.iloc[5:7]
+data.iloc[range(0, len(data)),3:5]
+data.iloc[range(0, len(data)),-1]
+
+data.sort_values(by=['sepal_width'])
+data.sort_values(by=['sepal_width','petal_width'])

@@ -1,0 +1,344 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+from scipy import stats
+data=pd.read_csv("/home/unix/Documents/academics.csv")
+df=pd.read_csv("/home/unix/Documents/academics.csv")
+data.head()
+data.info()
+data.isnull().sum()
+data['SSC'].isnull()
+data.mean()
+data['HSC'].isnull().sum()
+data['FE'].isnull().sum()
+
+data['HSC']
+data['HSC'].fillna(value=data['HSC'].mean(),inplace=True)
+data['HSC'].isnull().sum()
+data['HSC']
+
+data['FE']
+data['FE'].fillna(value=0,inplace=True)
+data['FE'].isnull().sum()
+data['FE']
+
+data["SE"]
+data['SE'].fillna(value=data['SE'].mean(),inplace=True)
+data['SE'].isnull().sum()
+data['SE']
+
+data['TE']
+data['TE'].fillna(value=data['TE'].max(),inplace=True)
+data['TE'].isnull().sum()
+data['TE']
+
+data['SSC'].fillna(value=0,inplace=True)
+data['SSC'].isnull().sum()
+data['SSC']
+
+
+df
+df.dropna(axis=0,subset=['SSC','FE','HSC','TE'],inplace=True)
+df['SSC'].isnull().sum()
+df
+
+OUTLIERS USING BOXPLOT and SCATTERPLOT
+
+plt.boxplot(data['SSC'])
+plt.boxplot(data['HSC'])
+
+plt.scatter(x=data['SE'], y=data['TE'])
+plt.xlabel("X-axis -FE")
+plt.ylabel("Y-axis -TE")
+plt.show()
+
+print(np.where((data['SE']<50) & (data['TE']>70)))
+data.boxplot()
+
+print("Outlier for SSC Column: ")
+print(np.where((data['SSC'])<60))
+
+print("Outlier for HSC Column: ")
+print(np.where((data['HSC']>=40) & (data['HSC']<=60)))
+
+print("Outlier for FE Column: ")
+print(np.where((data['FE'])<40))
+
+print("Outlier for SE Column: ")
+print(np.where((data['SE'])<50))
+
+print("Outlier for TE Column: ")
+print(np.where((data['TE'])<60))
+
+plt.scatter(x=data["SSC"],y=data["HSC"])
+plt.xlabel("X-axis -SSC")
+plt.ylabel("Y-axis -HSC")
+plt.show()
+
+print(np.where((data['SSC']<40) & (data['HSC']<60)))
+
+ssc_mean=data["SSC"].mean()
+hsc_mean=data["HSC"].mean()
+fe_mean=data["FE"].mean()
+se_mean=data["SE"].mean()
+te_mean=data["TE"].mean()
+ssc_std=data["SSC"].std()
+hsc_std=data["HSC"].std()
+fe_std=data["FE"].std()
+se_std=data["SE"].std()
+te_std=data["TE"].std()
+
+OUTLIERS USING Z_SCORE
+
+z_ssc = np.abs(stats.zscore(data['SSC']))
+print(z_ssc)
+
+x=z_ssc.mean()
+print(x)
+print("Outlier in SSC Column: ")
+print(np.where(z_ssc < x))
+
+z_hsc = np.abs(stats.zscore(data['HSC']))
+print(z_hsc)
+
+x=z_hsc.mean()
+print(x)
+print("Outlier in HSC Column: ")
+print(np.where(z_hsc < x))
+
+z_fe = np.abs(stats.zscore(data['FE']))
+print(z_fe)
+
+x=z_fe.mean()
+print(x)
+print("Outlier in FE Column: ")
+print(np.where(z_fe < x))
+
+z_se = np.abs(stats.zscore(data['SE']))
+print(z_se)
+
+x=z_se.mean()
+print(x)
+print("Outlier in SE Column: ")
+print(np.where(z_se < x))
+
+z_te = np.abs(stats.zscore(data['TE']))
+print(z_te)
+
+x=z_te.mean()
+print(x)
+print("Outlier in TE Column: ")
+print(np.where(z_te < x))
+
+df.describe()
+
+interquartile range
+
+sortte=sorted(data['TE'])
+sortte
+
+Q1 = np.median(sortte[:16])
+Q1
+
+Q3 = np.median(sortte[16:])
+Q3
+
+IQR = Q3 - Q1
+IQR
+
+lower_te = Q1-(1.5 * IQR)
+lower_te
+
+upper_te = Q3+(1.5 * IQR)
+upper_te
+
+outlier=[]
+for i in sortte:
+    if i<lower_te or i>upper_te:
+        outlier.append(i)
+print(outlier)
+
+sortssc=sorted(data['SSC'])
+sortssc
+
+Q1 = np.median(sortssc[:16])
+Q1
+
+Q3 = np.median(sortssc[16:])
+Q3
+
+IQR = Q3 - Q1
+IQR
+
+lower_ssc = Q1-(1.5 * IQR)
+lower_ssc
+
+upper_ssc = Q3+(1.5 * IQR)
+upper_ssc
+
+outlier=[]
+for i in sortssc:
+    if i<lower_ssc or i>upper_ssc:
+        outlier.append(i)
+print(outlier)
+
+sortfe=sorted(data['FE'])
+sortfe
+
+Q1 = np.median(sortfe[:16])
+Q1
+
+Q3 = np.median(sortfe[16:])
+Q3
+
+IQR = Q3 - Q1
+IQR
+
+lower_fe = Q1-(1.5 * IQR)
+lower_fe
+
+upper_fe = Q3+(1.5 * IQR)
+upper_fe
+
+outlier=[]
+for i in sortfe:
+    if i<lower_fe or i>upper_fe:
+        outlier.append(i)
+print(outlier)
+
+data
+
+sorthsc=sorted(data['HSC'])
+sorthsc
+
+Q1 = np.median(sorthsc[:16])
+Q1
+
+Q3 = np.median(sorthsc[16:])
+Q3
+
+IQR = Q3 - Q1
+IQR
+
+lower_hsc = Q1-(1.5 * IQR)
+lower_hsc
+
+upper_hsc = Q3+(1.5 * IQR)
+upper_hsc
+
+outlier=[]
+for i in sorthsc:
+    if i<lower_hsc or i>upper_hsc:
+        outlier.append(i)
+print(outlier)
+
+sortse=sorted(data['SE'])
+sortse
+
+Q1 = np.median(sortse[:16])
+Q1
+
+Q3 = np.median(sortse[16:])
+Q3
+
+IQR = Q3 - Q1
+IQR
+
+lower_se = Q1-(1.5 * IQR)
+lower_se
+
+upper_se = Q3+(1.5 * IQR)
+upper_se
+
+outlier=[]
+for i in sortse:
+    if i<lower_se or i>upper_se:
+        outlier.append(i)
+print(outlier)
+
+upper = np.where(data['SE'] >= (upper_se))
+upper
+
+lower = np.where(data['SE'] <= (lower_se))
+lower
+
+data
+
+data.shape
+
+data.drop(upper[0], inplace = True)
+
+data.drop(lower[0], inplace = True)
+
+data
+
+data['SSC']
+
+upper_limit = data['SSC'].quantile(0.90)
+lower_limit = data['SSC'].quantile(0.10)
+
+upper_limit
+
+lower_limit
+
+index = data[(data['SSC'] <= lower_limit)].index
+data.drop(index, inplace=True)
+data['SSC'].describe()
+
+data["SSC"]
+
+Quantile-based Flooring and Capping
+
+tenth_per=np.percentile(data["HSC"],10)
+ninth_per=data['HSC'].quantile(0.90)
+tenth_per
+
+ninth_per
+
+data["HSC"]
+
+data["HSC"] = np.where(data["HSC"] <=tenth_per, tenth_per,data['HSC'])
+data["HSC"] = np.where(data["HSC"] >=ninth_per, ninth_per,data['HSC'])
+
+data["HSC"]
+
+data.boxplot()
+
+mean_fe=data["FE"].mean()
+mean_fe
+
+data["FE"]
+
+data["FE"] = np.where(data["FE"] <=lower_fe, mean_fe,data['FE'])
+
+data["FE"]
+
+lower_limit = data['SSC'].quantile(0.10)
+lower_limit
+
+mean_ssc=data["SSC"].mean()
+mean_ssc
+
+data["SSC"] = np.where(data["SSC"] <=lower_limit, mean_ssc,data['SSC'])
+data["SSC"]
+
+replacing with median
+
+median_te=data["TE"].median()
+median_te
+
+data["TE"]
+
+tenth_per=np.percentile(data["TE"],10)
+data["TE"] = np.where(data["TE"] <=tenth_per, median_te,data['TE'])
+data["TE"]
+
+tenth_per=np.percentile(data["HSC"],10)
+tenth_per
+
+median_hsc=data["HSC"].median()
+median_hsc
+ 
+data["HSC"] = np.where(data["HSC"] <=tenth_per, median_hsc,data['HSC'])
+data.boxplot()

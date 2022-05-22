@@ -1,0 +1,51 @@
+import pandas as pd
+import numpy as np
+
+df=pd.read_csv("/home/unix/Desktop/Loan payments data.csv")
+
+df.head()
+
+data.isnull().sum()
+data["Age"].fillna(value=data['Age'].mean(),inplace=True)
+data.isnull().sum()
+
+df["loan_status"].value_counts()
+
+df["loan_status"].value_counts()
+
+group
+
+print(df.groupby(["Gender"]).mean()) 
+
+group=df.groupby("loan_status").mean()
+
+group
+
+df.groupby("loan_status").median()
+
+df.groupby(["loan_status","Gender"]).std()
+
+df.groupby("loan_status").min()
+
+df.groupby("loan_status").max()
+
+df["age"].min()
+
+data.groupby(by=['Sex', 'Pclass']).size()
+
+
+#reading the csv file into the dataframe
+
+df=pd.read_csv("/home/unix/Desktop/Iris.csv")
+
+df.head()
+
+df.groupby("Species").mean()
+
+df.groupby("Species").median()
+
+df.groupby("Species").std()
+
+df.groupby("Species").min()
+
+df.groupby("Species").max()
